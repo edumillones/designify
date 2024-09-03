@@ -1,0 +1,25 @@
+TODO 14/3/2024
+- Modificar secciones en le index para atraer clientes de React [ ]
+
+- Averiguar que Extensión usa Midu para predecir programación [x]
+    - Lo encontre en https://midu.dev/uses/ [x]
+
+- Actualizaremos los paquetes/pricing [ ]  
+    - Adaptar Year/Month [ ]
+
+- Cambiar la web a diseño con react, no con wordpress ni nada [ ]
+    - Hacer un ¿Que es React? [ ]
+    - El Futuro de React [ ]
+    - Las empresas que trabajan con React [ ]
+
+- Haremos diseños para la web [ ]
+
+- Crear nuevo componente para el index [ ]
+
+- Firebase Authentication [ ]
+
+- Entrenar inteligencia artifical [ ]
+    - Posible solución https://chatgpt.com/share/0d1a6975-a415-4cab-9ca5-5e74193ab4a9
+
+- Agrega que debo crear pagina para "Por qué Elegir React"
+

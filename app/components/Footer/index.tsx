@@ -14,17 +14,17 @@ interface socialLinks {
 const socialLinks: socialLinks[] = [
     {
         imgSrc: '/assets/footer/facebook.svg',
-        link: 'www.facebook.com',
+        link: 'https://www.instagram.com/designify.pe/',
         width: 10
     },
     {
         imgSrc: '/assets/footer/instagram.svg',
-        link: 'www.instagram.com',
+        link: 'https://www.instagram.com/designify.pe/',
         width: 14
     },
     {
         imgSrc: '/assets/footer/twitter.svg',
-        link: 'www.twitter.com',
+        link: 'https://www.instagram.com/designify.pe/',
         width: 14
     },
 
@@ -32,7 +32,7 @@ const socialLinks: socialLinks[] = [
 
 const links: links[] = [
     {
-        link: 'Product',
+        link: 'Productos',
     },
     {
         link: 'Pricing',
@@ -57,7 +57,7 @@ const footer = () => {
 
                     <div className='sm:col-span-6 lg:col-span-3'>
                         <div className="flex flex-shrink-0 items-center border-right">
-                            <Image src="/assets/footer/logo.svg" alt="logo" width={214} height={66} />
+                            <Image src="/assets/logo/logo.png" alt="logo" width={214} height={66} />
                         </div>
                     </div>
 
@@ -89,10 +89,9 @@ const footer = () => {
 
                 </div>
 
-                {/* All Rights Reserved */}
-
+                {/* All Rights Reserved */} 
                 <div className='pt-12 pb-10 lg:flex items-center justify-between border-t border-t-white border-opacity-30'>
-                    <h4 className='text-lg text-center md:text-start font-normal text-white opacity-60'>@2023.Paidin.All rights reserved</h4>
+                    <h4 className='text-lg text-center md:text-start font-normal text-white opacity-60'>@edu.millones 2024 Designify. All rights reserved</h4>
                     <div className="flex gap-5 mt-6 md:mt-0 justify-center md:justify-start">
                         <h4 className='opacity-60 text-lg font-normal text-white'><Link href="/" target="_blank">Privacy policy</Link></h4>
                         <div className="h-5 bg-white opacity-60 w-0.5"></div>

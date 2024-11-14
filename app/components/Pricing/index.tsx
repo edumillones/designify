@@ -31,7 +31,7 @@ const names = [
         imgSrc: '/assets/pricing/starthree.svg',
     },
     {
-        heading: "Plus",
+        heading: "Enterprise",
         price: 1600,
         subscriber: 0.50,             
         button: "Adquirir ahora",

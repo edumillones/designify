@@ -11,6 +11,11 @@ module.exports = {
   ],
   theme: {
   	colors: {
+		blue: '#0000FF',
+		cornflowerblue: '#6495ED',
+		dodgerblue: '#1E90FF',
+		midnightblue: '#191970',
+		lightgrey: '#D3D3D3',
   		transparent: 'transparent',
   		current: 'currentColor',
   		white: '#ffffff',

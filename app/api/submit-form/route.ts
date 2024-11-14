@@ -1,13 +1,28 @@
 import { NextResponse } from 'next/server'
+import type { Transporter } from 'nodemailer'
 import nodemailer from 'nodemailer'
+
+// Define the email data interface
+interface EmailData {
+  fullName: string
+  email: string
+  phone: string
+  additionalInfo: string
+  selectedService: string
+  servicePrice: number | string
+}
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
+    const body = await request.json() as EmailData
     const { fullName, email, phone, additionalInfo, selectedService, servicePrice } = body
 
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      throw new Error('Credenciales de email no configuradas')
+    }
+
     // Configure nodemailer transporter
-    let transporter = nodemailer.createTransport({
+    const transporter: Transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
@@ -17,10 +32,13 @@ export async function POST(request: Request) {
       },
     })
 
+    // Verify transporter configuration
+    await transporter.verify()
+
     // Send email
     await transporter.sendMail({
-      from: '"Formulario Designify" <designify.pe@gmail.com>',
-      to: "designify.pe@gmail.com",
+      from: `"Formulario Designify" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
       subject: `Nueva solicitud de ${selectedService}`,
       text: `
         Nombre: ${fullName}
@@ -39,7 +57,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error al enviar el formulario:', error)
     return NextResponse.json(
-      { message: 'Error al enviar el formulario' },
+      { message: error instanceof Error ? error.message : 'Error al enviar el formulario' },
       { status: 500 }
     )
   }

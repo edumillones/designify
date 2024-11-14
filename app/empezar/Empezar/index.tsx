@@ -163,9 +163,11 @@ export default function Component() {
       ]
     }
   ]
+// ... rest of your imports and code ...
 
-  const handleSubmit = async (serviceId: string) => {
-    const selectedService = services.find(service => service.id === serviceId);
+const handleSubmit = async (serviceId: string) => {
+  try {
+    const selectedService = services.find(service => service.id === serviceId)
     
     const response = await fetch('/api/submit-form', {
       method: 'POST',
@@ -177,15 +179,23 @@ export default function Component() {
         selectedService: selectedService?.title,
         servicePrice: selectedService?.price,
       }),
-    });
+    })
 
-    if (response.ok) {
-      setStep(4);
-    } else {
-      console.error('Error al enviar el formulario');
-      // Aquí podrías manejar el error, por ejemplo, mostrando un mensaje al usuario
+    if (!response.ok) {
+      throw new Error('Error en la respuesta del servidor')
     }
-  };
+
+    const data = await response.json()
+    console.log('Respuesta:', data)
+    setStep(4)
+  } catch (error) {
+    console.error('Error al enviar el formulario:', error)
+    // Aquí podrías mostrar un mensaje de error al usuario
+    alert('Error al enviar el formulario. Por favor, intenta nuevamente.')
+  }
+}
+
+// ... rest of your component code ...;
 
   const renderStep = () => {
     switch(step) {

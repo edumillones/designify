@@ -16,7 +16,7 @@ export default function ContactPage() {
   const [isWatching, setIsWatching] = useState(false)
 
   useEffect(() => {
-    const hasContent = formData.name || formData.email || formData.message
+    const hasContent = formData.name !== '' || formData.email !== '' || formData.message !== ''
     setIsWatching(hasContent)
   }, [formData])
 
@@ -27,7 +27,7 @@ export default function ContactPage() {
     setErrorMessage('')
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/api/contact-form/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

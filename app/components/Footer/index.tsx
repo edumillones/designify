@@ -1,107 +1,74 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 
-interface links {
-    link: string;
+interface NavLink {
+  name: string;
+  href: string;
 }
 
-interface socialLinks {
-    imgSrc: string;
-    link: string;
-    width: number;
-}
+const navLinks: NavLink[] = [
+  { name: "Dominio", href: "/dominio" },
+  { name: "Servicios", href: "/empezar" },
+  { name: "Clientes", href: "/portfolio" },
+  { name: "Contacto", href: "/contacto" },
+];
 
-const socialLinks: socialLinks[] = [
-    {
-        imgSrc: '/assets/footer/facebook.svg',
-        link: 'https://www.instagram.com/designify.pe/',
-        width: 10
-    },
-    {
-        imgSrc: '/assets/footer/instagram.svg',
-        link: 'https://www.instagram.com/designify.pe/',
-        width: 14
-    },
-    {
-        imgSrc: '/assets/footer/twitter.svg',
-        link: 'https://www.instagram.com/designify.pe/',
-        width: 14
-    },
+const socialLinks = [
+  { icon: Facebook, href: "https://www.facebook.com/designify.pe/" },
+  { icon: Instagram, href: "https://www.instagram.com/designify.pe/" },
+  { icon: Twitter, href: "https://www.twitter.com/designify.pe/" },
+];
 
-]
-
-const links: links[] = [
-    {
-        link: 'Productos',
-    },
-    {
-        link: 'Pricing',
-    },
-    {
-        link: 'Features',
-    },
-
-]
-
-
-
-const footer = () => {
-    return (
-
-        <div className=" bg-midnightblue">
-
-            <div className="mx-auto max-w-2xl pt-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                <div className="my-12 grid grid-cols-1 gap-y-10 sm:grid-cols-6 lg:grid-cols-12">
-
-                    {/* COLUMN-1 */}
-
-                    <div className='sm:col-span-6 lg:col-span-3'>
-                        <div className="flex flex-shrink-0 items-center border-right">
-                            <Image src="/assets/logo/logo.png" alt="logo" width={214} height={66} />
-                        </div>
-                    </div>
-
-                    <div className='sm:col-span-6 lg:col-span-5 flex items-center'>
-                        <div className='flex gap-4'>
-                            {links.map((items, i) => (
-                                <div key={i}>
-                                    <Link href="/" className="text-lg font-normal text-white flex items-center justify-center">
-                                         {items.link}
-                                    </Link>
-                                </div>
-                            ))}
-
-                        </div>
-                    </div>
-
-                    <div className='sm:col-span-6 lg:col-span-4'>
-                        <div className='flex gap-4 lg:justify-end'>
-                            {socialLinks.map((items, i) => (
-                                <Link href={items.link} key={i}>
-                                    <div className="socialBg h-12 w-12 shadow-xl text-base rounded-full flex items-center justify-center footer-icons hover:bg-white">
-                                        <Image src={items.imgSrc} alt={items.imgSrc} width={items.width} height={2} className="sepiaa" />
-                                    </div>
-                                </Link>
-                            ))}
-
-                        </div>
-                    </div>
-
-                </div>
-
-                {/* All Rights Reserved */} 
-                <div className='pt-12 pb-10 lg:flex items-center justify-between border-t border-t-white border-opacity-30'>
-                    <h4 className='text-lg text-center md:text-start font-normal text-white opacity-60'>@edu.millones 2024 Designify. All rights reserved</h4>
-                    <div className="flex gap-5 mt-6 md:mt-0 justify-center md:justify-start">
-                        <h4 className='opacity-60 text-lg font-normal text-white'><Link href="/" target="_blank">Privacy policy</Link></h4>
-                        <div className="h-5 bg-white opacity-60 w-0.5"></div>
-                        <h4 className='opacity-60 text-lg font-normal text-white'><Link href="/" target="_blank">Terms & conditions</Link></h4>
-                    </div>
-                </div>
+export default function Footer() {
+  return (
+    <footer className="bg-midnightblue text-white">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="flex flex-col items-start">
+            <Link href="/#" className="mb-4">
+              <Image src="/assets/logo/logo.png" alt="Designify logo" width={150} height={46} className="h-12 w-auto" />
+            </Link>
+          </div>
+          
+          <nav className="flex flex-col space-y-4">
+            <h3 className="text-lg font-semibold">Navegación</h3>
+            {navLinks.map((link) => (
+              <Link key={link.name} href={link.href} className="text-gray-300 hover:text-white transition-colors">
+                {link.name}
+              </Link>
+            ))}
+          </nav>
+          
+          <div className="flex flex-col space-y-4">
+            <h3 className="text-lg font-semibold">Legal</h3>
+            <Link href="/privacy-policy" className="text-gray-300 hover:text-white transition-colors">
+              Política de privacidad
+            </Link>
+            <Link href="/terms-conditions" className="text-gray-300 hover:text-white transition-colors">
+              Términos y condiciones
+            </Link>
+          </div>
+          
+          <div className="flex flex-col space-y-4">
+            <h3 className="text-lg font-semibold">Síguenos</h3>
+            <div className="flex space-x-4">
+              {socialLinks.map((social, index) => (
+                <Link key={index} href={social.href} className="text-gray-300 hover:text-white transition-colors">
+                  <social.icon className="h-6 w-6" />
+                  <span className="sr-only">{social.icon.name}</span>
+                </Link>
+              ))}
             </div>
-
-        </div >
-    )
+          </div>
+        </div>
+        
+        <div className="mt-12 border-t border-gray-700 pt-8 text-center">
+          <p className="text-sm text-gray-300">
+            &copy; {new Date().getFullYear()} Designify. Todos los derechos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
 }
-
-export default footer;

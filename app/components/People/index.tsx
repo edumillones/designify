@@ -16,8 +16,8 @@ const People = () => {
                     <div className='col-span-6 flex flex-col justify-evenly lg:pl-24 mt-10 lg:mt-0'>
                         <h1 className='text-midnightblue text-4xl sm:text-5xl font-semibold text-center lg:text-start lh-143'>+20 negocios están disfrutando de nuestro servicio</h1>
                         <h3 className='text-black text-lg font-normal text-center lg:text-start lh-173 opacity-75 pt-5 lg:pt-0'>Explora nuestras creaciones y descubre cómo podemos mejorar tu experiencia digital</h3>
-                        <Link href={'https://edumillones.vercel.app/'} target="_blank" rel="noopener noreferrer" className="text-electricblue text-lg font-medium flex gap-2 mx-auto lg:mx-0 pt-5 lg:pt-0">
-                            Ver Portafolio <Image src="/assets/people/arrow-right.svg" alt="arrow-right" width={24} height={24} />
+                        <Link href={'/portfolio'} target="_blank" rel="noopener noreferrer" className="text-electricblue text-lg font-medium flex gap-2 mx-auto lg:mx-0 pt-5 lg:pt-0">
+                            Ver Clientes <Image src="/assets/people/arrow-right.svg" alt="arrow-right" width={24} height={24} />
                         </Link>
                     </div>
 

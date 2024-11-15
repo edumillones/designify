@@ -18,21 +18,21 @@ const testimonials = [
     name: "María González",
     role: "Diseñadora UX/UI",
     company: "TechStart",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/assets/clientes/1.png",
     quote: "El CV que diseñaron capturó perfectamente mi personalidad y experiencia profesional. ¡Conseguí mi trabajo soñado en menos de un mes!"
   },
   {
     name: "Carlos Ruiz",
     role: "Desarrollador Full Stack",
     company: "GlobalTech",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/assets/clientes/2.png",
     quote: "La calidad y profesionalismo del portafolio superó mis expectativas. El diseño moderno y limpio realmente hace que mi trabajo destaque."
   },
   {
     name: "Ana Martínez",
     role: "Arquitecta de Software",
     company: "InnovaSoft",
-    image: "/placeholder.svg?height=100&width=100",
+    image: "/assets/clientes/3.png",
     quote: "Gracias a mi nuevo CV, he recibido más ofertas de entrevistas que nunca. La inversión valió completamente la pena."
   }
 ]
@@ -179,39 +179,16 @@ export default function Component() {
           <h2 className="text-3xl font-bold mb-4">
             ¿Listo para destacar con un CV o portafolio personalizado?
           </h2>
-          <p className="text-lg mb-8 text-primary-foreground/80">
+          <p className="text-lg mb-8 text-primary-foreground/80" >
             Ponte en contacto con nosotros y haz realidad tu visión.
           </p>
-          <Button size="lg" variant="secondary">
-            Contáctanos Ahora
-          </Button>
+          <a href="/empezar">
+      <Button size="lg" variant="secondary"> 
+        Contáctanos Ahora
+      </Button>
+    </a>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 bg-background">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="text-center md:text-left">
-            <h3 className="font-bold text-lg mb-2">Contacto</h3>
-            <p className="text-muted-foreground">contacto@tuempresa.com</p>
-            <p className="text-muted-foreground">+34 900 123 456</p>
-          </div>
-          <div className="flex gap-6">
-            <Button variant="ghost" size="icon">
-              <Image src="/placeholder.svg?height=24&width=24" alt="Facebook" width={24} height={24} />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Image src="/placeholder.svg?height=24&width=24" alt="Twitter" width={24} height={24} />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Image src="/placeholder.svg?height=24&width=24" alt="LinkedIn" width={24} height={24} />
-            </Button>
-          </div>
-          <div className="text-center md:text-right">
-            <Button variant="link">Agendar Consulta</Button>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

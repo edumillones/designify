@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export async function POST(req) {
+export async function POST(req: Request) {
   try {
     console.log('Processing contact form submission...');
 
     const body = await req.json();
     const { name, email, message } = body;
 
+    // Validar campos requeridos
     if (!name || !email || !message) {
       console.log('Missing required fields:', { name, email, message });
       return NextResponse.json(
@@ -18,6 +19,7 @@ export async function POST(req) {
 
     console.log('Configuring email transport...');
 
+    // Verificar variables de entorno
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       console.error('Missing email configuration');
       return NextResponse.json(
@@ -26,22 +28,21 @@ export async function POST(req) {
       );
     }
 
+    // Configurar transporte de nodemailer
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
-      secure: false,
+      secure: false, // true para 465, false para otros puertos
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
       },
-      tls: {
-        rejectUnauthorized: false
-      }
     });
 
+    // Opciones del correo
     const mailOptions = {
       from: `"Formulario de Contacto" <${process.env.EMAIL_USER}>`,
-      to: "designify.pe@gmail.com",
+      to: "designify.pe@gmail.com", // Cambia esto al correo donde quieres recibir los mensajes
       subject: `Nuevo mensaje de contacto de ${name}`,
       text: `
         Nombre: ${name}
@@ -58,9 +59,11 @@ export async function POST(req) {
 
     console.log('Attempting to send email...');
 
+    // Verificar conexión SMTP
     await transporter.verify();
     console.log('SMTP connection verified');
 
+    // Enviar el correo
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent successfully:', info.messageId);
 
@@ -70,12 +73,7 @@ export async function POST(req) {
     );
 
   } catch (error) {
-    console.error('Error in contact form API:', {
-      message: error.message,
-      stack: error.stack,
-      code: error.code
-    });
-
+    console.error('Error in contact form API:', error);
     return NextResponse.json(
       { message: 'Error al enviar el mensaje. Por favor, intenta de nuevo.' },
       { status: 500 }

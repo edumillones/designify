@@ -1,5 +1,4 @@
 "use client"
-"use client"
 
 import { useState } from 'react'
 import { Mail, Phone, MapPin, Send } from 'lucide-react'
@@ -12,14 +11,16 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus('idle')
+    setErrorMessage('')
 
     try {
-      const response = await fetch('/api/contact-form/contact', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,15 +28,19 @@ export default function ContactPage() {
         body: JSON.stringify(formData),
       })
 
+      const data = await response.json()
+
       if (response.ok) {
         setSubmitStatus('success')
         setFormData({ name: '', email: '', message: '' })
       } else {
         setSubmitStatus('error')
+        setErrorMessage(data.message || 'Error al enviar el mensaje. Por favor, intenta de nuevo.')
       }
     } catch (error) {
       console.error('Error:', error)
       setSubmitStatus('error')
+      setErrorMessage('Error de conexión. Por favor, verifica tu conexión a internet y vuelve a intentar.')
     } finally {
       setIsSubmitting(false)
     }
@@ -114,7 +119,7 @@ export default function ContactPage() {
                 <p className="text-green-600 text-center">Mensaje enviado con éxito</p>
               )}
               {submitStatus === 'error' && (
-                <p className="text-red-600 text-center">Error al enviar el mensaje. Por favor, intenta de nuevo.</p>
+                <p className="text-red-600 text-center">{errorMessage}</p>
               )}
             </form>
           </div>

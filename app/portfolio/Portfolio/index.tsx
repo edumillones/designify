@@ -82,7 +82,7 @@ export default function Component() {
       {/* Hero Section */}
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-primary/10 to-background">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-black mb-6">Nuestro Portafolio</h1>
+          <h1 className="text-4xl sm:text-5xl font-black mb-6">Haz realidad tu visión</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Explora ejemplos de nuestros trabajos en CVs y portafolios que han ayudado a profesionales a destacar.
           </p>

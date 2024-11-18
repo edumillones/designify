@@ -16,6 +16,7 @@ interface ServiceOption {
 export default function Component() {
   const [step, setStep] = useState(1)
   const [selectedService, setSelectedService] = useState("")
+  const [selectedPackage, setSelectedPackage] = useState("")
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -165,80 +166,138 @@ export default function Component() {
     }
   ]
 
-const handleSubmit = async (serviceId: string) => {
-  try {
-    const selectedService = services.find(service => service.id === serviceId)
-    
-    const response = await fetch('/api/submit-form', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...formData,
-        selectedService: selectedService?.title,
-        servicePrice: selectedService?.price,
-      }),
-    })
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const selectedServiceObj = services.find(service => service.id === selectedPackage)
+      
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          selectedService: selectedServiceObj?.title,
+          servicePrice: selectedServiceObj?.price,
+        }),
+      })
 
-    if (!response.ok) {
-      throw new Error('Error en la respuesta del servidor')
+      if (!response.ok) {
+        throw new Error('Error en la respuesta del servidor')
+      }
+
+      const data = await response.json()
+      console.log('Respuesta:', data)
+      setStep(4)
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error)
+      alert('Error al enviar el formulario. Por favor, intenta nuevamente.')
     }
-
-    const data = await response.json()
-    console.log('Respuesta:', data)
-    setStep(4)
-  } catch (error) {
-    console.error('Error al enviar el formulario:', error)
-    // Aquí podrías mostrar un mensaje de error al usuario
-    alert('Error al enviar el formulario. Por favor, intenta nuevamente.')
   }
-}
 
-const renderStep = () => {
-  switch(step) {
-    case 1:
-      return (
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-black">Selecciona tu Servicio</h2>
-            <p className="text-lg text-black/60 mt-4">
-              Elige el tipo de servicio que mejor se adapte a tus necesidades
-            </p>
+  const renderStep = () => {
+    switch(step) {
+      case 1:
+        return (
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-black">Selecciona tu Servicio</h2>
+              <p className="text-lg text-black/60 mt-4">
+                Elige el tipo de servicio que mejor se adapte a tus necesidades
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { name: "CV", value: "cv" },
+                { name: "Página Web", value: "web" },
+                { name: "Portfolio", value: "portfolio" }
+              ].map((service) => (
+                <div 
+                  key={service.name}
+                  className="bg-grey500 rounded-3xl p-8 cursor-pointer hover:bg-dodgerblue group transition-colors"
+                  onClick={() => {
+                    setSelectedService(service.value)
+                    setStep(2)
+                  }}
+                >
+                  <h3 className="text-2xl font-semibold text-midnightblue group-hover:text-white mb-6">{service.name}</h3>
+                  <button className="w-full py-4 px-8 text-xl font-medium text-white bg-blue rounded-full border-2 border-blue group-hover:bg-cornflowerblue group-hover:border-cornflowerblue">
+                    Seleccionar
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { name: "CV", value: "cv" },
-              { name: "Página Web", value: "web" },
-              { name: "Portfolio", value: "portfolio" }
-            ].map((service) => (
-              <div 
-                key={service.name}
-                className="bg-grey500 rounded-3xl p-8 cursor-pointer hover:bg-dodgerblue group transition-colors"
-                onClick={() => {
-                  setSelectedService(service.value)
-                  setStep(2)
-                }}
-              >
-                <h3 className="text-2xl font-semibold text-midnightblue group-hover:text-white mb-6">{service.name}</h3>
-                <button className="w-full py-4 px-8 text-xl font-medium text-white bg-blue rounded-full border-2 border-blue group-hover:bg-cornflowerblue group-hover:border-cornflowerblue">
-                  Seleccionar
-                </button>
-              </div>
-            ))}
+        )
+      case 2:
+        return (
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-black">Selecciona tu Paquete</h2>
+              <p className="text-lg text-black/60 mt-4">
+                Elige el paquete que mejor se adapte a tus necesidades
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services
+                .filter(service => service.category === selectedService)
+                .map((service, index, array) => (
+                  <div 
+                    key={service.id} 
+                    className={`
+                      bg-grey500 rounded-3xl p-10 group hover:bg-dodgerblue transition-colors cursor-pointer
+                      ${array.length === 4 && index === array.length - 1 ? 
+                        'md:col-start-2 md:col-span-1 lg:col-start-2 lg:col-span-1' : ''}
+                    `}
+                  >
+                    <h3 className="text-4xl font-semibold text-midnightblue group-hover:text-white mb-8">
+                      {service.title}
+                    </h3>
+                    <button 
+                      className="w-full py-4 px-8 text-xl font-medium text-white bg-blue rounded-full border-2 border-blue group-hover:bg-cornflowerblue group-hover:border-cornflowerblue mb-8"
+                      onClick={() => {
+                        setSelectedPackage(service.id)
+                        setStep(3)
+                      }}
+                    >
+                      Seleccionar
+                    </button>
+                    <div className="mb-8">
+                      <span className="text-4xl font-semibold text-midnightblue group-hover:text-white">
+                        {typeof service.price === 'number' ? `S/${service.price}` : service.price}
+                      </span>
+                    </div>
+                    <div className="space-y-6">
+                      {service.features.map((feature, index) => (
+                        <div key={index} className="flex items-center gap-4">
+                          <div className="w-8 h-8 rounded-full bg-[#E8F2FF] flex items-center justify-center flex-shrink-0">
+                            <Check className="w-5 h-5 text-blue" />
+                          </div>
+                          <p className="text-lg font-medium text-black/60 group-hover:text-white/60">
+                            {feature}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                    <Image
+                      src="/assets/pricing/starone.svg"
+                      alt="Decorative star"
+                      width={154}
+                      height={154}
+                      className="absolute bottom-0 right-0"
+                    />
+                  </div>
+                ))}
+            </div>
           </div>
-        </div>
-      )
-    case 2:
-        // Personal information form remains the same...
+        )
+      case 3:
         return (
           <div className="mx-auto max-w-2xl px-4">
             <div className="bg-white rounded-3xl p-8">
               <h2 className="text-3xl font-semibold text-midnightblue mb-8 text-center">Información Personal</h2>
-              <form onSubmit={(e) => {
-                e.preventDefault()
-                setStep(3)
-              }} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-lg font-medium text-midnightblue mb-2">Nombre completo</label>
                   <input
@@ -280,72 +339,13 @@ const renderStep = () => {
                   type="submit"
                   className="w-full py-4 px-8 text-xl font-medium text-white bg-blue rounded-full hover:bg-blue/90 transition-colors"
                 >
-                  Continuar
+                  Enviar
                 </button>
               </form>
             </div>
           </div>
         )
-        case 3:
-          return (
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl sm:text-5xl font-black">Selecciona tu Paquete</h2>
-                <p className="text-lg text-black/60 mt-4">
-                  Elige el paquete que mejor se adapte a tus necesidades
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services
-                  .filter(service => service.category === selectedService)
-                  .map((service, index, array) => (
-                    <div 
-                      key={service.id} 
-                      className={`
-                        bg-grey500 rounded-3xl p-10 group hover:bg-dodgerblue transition-colors cursor-pointer
-                        ${array.length === 4 && index === array.length - 1 ? 
-                          'md:col-start-2 md:col-span-1 lg:col-start-2 lg:col-span-1' : ''}
-                      `}
-                    >
-                      <h3 className="text-4xl font-semibold text-midnightblue group-hover:text-white mb-8">
-                        {service.title}
-                      </h3>
-                      <button 
-                        className="w-full py-4 px-8 text-xl font-medium text-white bg-blue rounded-full border-2 border-blue group-hover:bg-cornflowerblue group-hover:border-cornflowerblue mb-8"
-                        onClick={() => handleSubmit(service.id)}
-                      >
-                        Adquirir ahora
-                      </button>
-                      <div className="mb-8">
-                        <span className="text-4xl font-semibold text-midnightblue group-hover:text-white">
-                          {typeof service.price === 'number' ? `S/${service.price}` : service.price}
-                        </span>
-                      </div>
-                      <div className="space-y-6">
-                        {service.features.map((feature, index) => (
-                          <div key={index} className="flex items-center gap-4">
-                            <div className="w-8 h-8 rounded-full bg-[#E8F2FF] flex items-center justify-center flex-shrink-0">
-                              <Check className="w-5 h-5 text-blue" />
-                            </div>
-                            <p className="text-lg font-medium text-black/60 group-hover:text-white/60">
-                              {feature}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                      <Image
-                        src="/assets/pricing/starone.svg"
-                        alt="Decorative star"
-                        width={154}
-                        height={154}
-                        className="absolute bottom-0 right-0"
-                      />
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )
-        case 4:  
+      case 4:  
         return (
           <div className="mx-auto max-w-2xl px-4 text-center">
             <div className="bg-white rounded-3xl p-8">

@@ -35,12 +35,12 @@ const Navbar = () => {
                         <div className="flex flex-1 items-center sm:items-stretch sm:justify-start">
                             {/* LOGO */}
                             <Link href="/#" className="flex flex-shrink-0 items-center">
-                                <img
+                                Image
                                     className="block h-16 w-16 lg:hidden"
                                     src={'/assets/logo/logo.png'}
                                     alt="designify-logo"
                                 />
-                                <img
+                                Image
                                     className="hidden h-16 w-16 lg:block"
                                     src={'/assets/logo/logo.png'}
                                     alt="designify-logo"

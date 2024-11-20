@@ -132,6 +132,21 @@ export default function Component() {
       ]
     },
     {
+      id: "portfolio-cv",
+      title: "CV + Portfolio",
+      description: "Portfolio exclusivo sin límites",
+      price: 199,
+      category: "portfolio",
+      features: [
+        "Documento + Portfolio web",
+        "2 idiomas (EN/ES)",
+        "5 revisiones para perfección",
+        "Formato PDF",
+        "Editable en LaTeX",
+        "Dominio personalizado"
+      ]
+    },
+    {
       id: "cv-basic",
       title: "CV Básico",
       description: "Diseño profesional para tu CV",
@@ -204,7 +219,7 @@ export default function Component() {
     },
     {
       id: "app-custom",
-      title: "Desarrollo de Aplicaciones Personalizadas",
+      title: "App Personalizada",
       description: "Solución a medida para tus necesidades",
       price: "Personalizado",
       category: "app",

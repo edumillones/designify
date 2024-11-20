@@ -15,8 +15,10 @@ export async function POST(req: Request) {
       })
     })
 
+    // Utilizamos NextResponse.json() para retornar una respuesta correcta
     return NextResponse.json(result)
   } catch (error) {
+    // Devolvemos un error con el código de estado 500
     return NextResponse.json({ error: 'Error checking domain' }, { status: 500 })
   }
 }

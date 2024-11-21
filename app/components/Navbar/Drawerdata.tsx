@@ -21,29 +21,29 @@ function classNames(...classes: string[]) {
 
 const Data = () => {
   return (
-    <div className="rounded-md max-w-sm w-full mx-auto">
-      <div className="flex-1 space-y-4 py-1">
+    <div className="rounded-md w-full mx-auto">
+      <div className="flex-1 space-y-6 py-2">
         <div className="sm:block">
-          <div className="space-y-1 px-5 pt-2 pb-3">
+          <div className="space-y-4 px-5 pt-2 pb-3">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={classNames(
                   item.current ? 'text-black hover:opacity-100' : 'hover:text-black hover:opacity-100',
-                  'px-2 py-1 text-lg font-normal opacity-75 block'
+                  'px-2 py-2 text-xl font-normal opacity-75 block'
                 )}
                 aria-current={item.current ? 'page' : undefined}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="mt-4"></div>
-            <button className="bg-white w-full text-midnightblue border border-midnightblue font-medium py-2 px-4 rounded">
+            <div className="mt-6"></div>
+            <button className="bg-white w-full text-midnightblue border border-midnightblue font-medium py-3 px-4 rounded text-lg">
               Iniciar Sesión
             </button>
             <Link href="/empezar" className="w-full">
-              <button className="bg-midnightblue w-full hover:bg-blue hover:text-white text-white font-medium my-2 py-2 px-4 rounded">
+              <button className="bg-midnightblue w-full hover:bg-blue hover:text-white text-white font-medium my-3 py-3 px-4 rounded text-lg">
                 Empezar
               </button>
             </Link>
@@ -55,3 +55,4 @@ const Data = () => {
 }
 
 export default Data;
+

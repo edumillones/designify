@@ -1,4 +1,4 @@
-import BlockPage from './Resultados';  // Ajusta la ruta si es necesario
+import BlockPage from './Resultados/index'; // Ensure the path matches the directory structure
 
 export default function Resultados() {
   return <BlockPage />;

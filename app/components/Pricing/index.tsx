@@ -160,9 +160,9 @@ const Pricing = () => {
             <div className='mx-auto max-w-7xl sm:py-20 lg:px-8 my-16'>
                 <h3 className='text-4xl sm:text-5xl font-semibold text-black text-center'>Nuestros Paquetes</h3>
 
-                <p className='text-lg font-normal text-center text-black opacity-60 pt-5'>Ofrecemos opciones accesibles para crear tu sitio web, CVs y portafolios <br /> profesionales que te harán destacar.</p>
+                <p className='text-black text-lg font-normal text-center lh-173 opacity-75 pt-3'>Ofrecemos opciones profesionales accesibles<br /> que te harán destacar</p>
 
-                <div className='mt-10 relative'>
+                <div className='mt-6 relative'>
                     <div className='flex justify-center'>
                         <div className='bg-cornflowerblue flex py-1 px-1 rounded-full '>
                             {packages.map((pkg) => (
@@ -184,9 +184,9 @@ const Pricing = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-16 mx-5 gap-6'>
                     {currentPackage?.plans.map((plan, index) => (
-                        <div className='pt-10 pb-28 pl-10 pr-10 bg-white rounded-3xl bxshd relative cursor-pointer hover:bg-dodgerblue group' key={index}>
+                        <div className='pt-10 pb-28 px-4 sm:px-10 bg-white rounded-3xl bxshd relative cursor-pointer hover:bg-dodgerblue group' key={index}>
                             <Image src={plan.imgSrc} alt="star-image" width={154} height={154} className='absolute bottom-0 right-0' />
-                            <h4 className='text-4xl sm:text-5xl font-semibold mb-8 text-midnightblue group-hover:text-white'>{plan.heading}</h4>
+                            <h4 className='text-3xl sm:text-4xl lg:text-5xl font-semibold mb-8 text-midnightblue group-hover:text-white'>{plan.heading}</h4>
                             <Link href="/empezar" className='text-xl font-medium text-white w-full bg-blue hover:text-white group-hover:bg-cornflowerblue group-hover:border-cornflowerblue border-2 border-blue rounded-full py-4 px-12 mb-12 text-center block'>
                                 {plan.button}
                             </Link>
@@ -194,7 +194,7 @@ const Pricing = () => {
                             {plan.features.map((feature, featureIndex) => (
                                 <div key={featureIndex} className='flex gap-4 pt-6'>
                                     <Image src="/assets/pricing/tick.svg" alt="tick-image" width={32} height={32} />
-                                    <p className='text-lg font-medium text-black opacity-60 group-hover:text-translucentwhite'>{feature}</p>
+                                    <p className='text-base sm:text-lg font-medium text-black opacity-60 group-hover:text-translucentwhite'>{feature}</p>
                                 </div>
                             ))}
                         </div>

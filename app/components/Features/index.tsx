@@ -31,7 +31,7 @@ const Features = () => {
         <div className="bg-babyblue" id="features">
             <div className="mx-auto max-w-2xl py-20 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                 <h3 className="text-4xl sm:text-5xl font-semibold text-black text-center my-10">Nuestros Servicios</h3>
-                <h5 className="text-black opacity-60 text-lg font-normal text-center">En Designify, ayudamos a profesionales a destacar con servicios de diseño personalizados <br /> para portafolios, sitios web y currículums.</h5>
+                <h5 className="text-black opacity-60 text-lg font-normal text-center">En Designify, ayudamos a profesionales a destacar con servicios de diseño personalizados</h5>
 
                 <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-16 gap-y-4 lg:gap-x-8 mt-10'>
                     {Aboutdata.map((item, i) => (

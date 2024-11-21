@@ -87,7 +87,7 @@ const Payment = () => {
                 </div>
                 <div className='col-span-6 flex flex-col justify-center'>
                     <h2 className='text-midnightblue text-4xl sm:text-5xl font-semibold text-center lg:text-start lh-143 mb-6'>Compra tu dominio con Designify</h2>
-                    <h3 className='text-black text-lg font-normal text-center lg:text-start lh-173 opacity-75 mb-8'>Descubre si el dominio que tienes en mente está disponible, si es así puedes adquirirlo ahora mismo.</h3>
+                    <h3 className='text-black text-lg font-normal text-center lg:text-start lh-173 opacity-75 mb-8'>Descubre si el dominio que tienes en mente está disponible, si es así puedes adquirirlo ahora mismo</h3>
                     
                     <form onSubmit={handleSearch} className="mb-8">
                         <div className="flex flex-col sm:flex-row gap-4">

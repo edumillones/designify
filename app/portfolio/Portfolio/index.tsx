@@ -78,22 +78,22 @@ const portfolioItems = [
 
 export default function Component() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-babyblue">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-primary/10 to-background">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-cornflowerblue/10 to-translucentwhite">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-black mb-6">Haz realidad tu visión</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl font-black mb-6 text-midnightblue">Haz realidad tu visión</h1>
+          <p className="text-xl text-black/60 max-w-3xl mx-auto">
             Explora ejemplos de nuestros trabajos en CVs y portafolios que han ayudado a profesionales a destacar.
           </p>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-babyblue">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">Clientes Satisfechos</h2>
-          <p className="text-lg text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-4 text-midnightblue">Clientes Satisfechos</h2>
+          <p className="text-lg text-black/60 text-center mb-12 max-w-3xl mx-auto">
             Estamos orgullosos de haber trabajado con clientes de diversas industrias que han confiado en nosotros para impulsar su presencia profesional.
           </p>
           
@@ -101,7 +101,7 @@ export default function Component() {
             <CarouselContent>
               {testimonials.map((testimonial, index) => (
                 <CarouselItem key={index}>
-                  <Card className="border-0 bg-primary/5">
+                  <Card className="border-0 bg-grey500">
                     <CardContent className="flex flex-col items-center p-8">
                       <div className="w-20 h-20 rounded-full overflow-hidden mb-6">
                         <Image
@@ -114,15 +114,15 @@ export default function Component() {
                       </div>
                       <div className="flex gap-1 mb-4">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                          <Star key={i} className="w-5 h-5 fill-blue text-blue" />
                         ))}
                       </div>
-                      <blockquote className="text-lg text-center mb-6">
+                      <blockquote className="text-lg text-center mb-6 text-midnightblue">
                         {testimonial.quote}
                       </blockquote>
                       <div className="text-center">
-                        <p className="font-semibold">{testimonial.name}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="font-semibold text-midnightblue">{testimonial.name}</p>
+                        <p className="text-sm text-black/60">
                           {testimonial.role} en {testimonial.company}
                         </p>
                       </div>
@@ -138,16 +138,16 @@ export default function Component() {
       </section>
 
       {/* Portfolio Grid */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary/5">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-blue/5">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">Ejemplos de Nuestros Diseños</h2>
-          <p className="text-lg text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-4 text-midnightblue">Ejemplos de Nuestros Diseños</h2>
+          <p className="text-lg text-black/60 text-center mb-12 max-w-3xl mx-auto">
             Aquí encontrarás algunos ejemplos de los CVs y portafolios que hemos diseñado, cada uno personalizado para reflejar las habilidades y experiencia de nuestros clientes.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {portfolioItems.map((item, index) => (
-              <Card key={index} className="group overflow-hidden">
+              <Card key={index} className="group overflow-hidden bg-grey500">
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <Image
                     src={item.image}
@@ -157,10 +157,10 @@ export default function Component() {
                   />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <div className="text-center p-6">
-                      <p className="text-primary-foreground text-sm mb-2">{item.category}</p>
+                      <p className="text-white text-sm mb-2">{item.category}</p>
                       <h3 className="text-white text-xl font-bold mb-2">{item.title}</h3>
                       <p className="text-white/80 text-sm mb-4">{item.description}</p>
-                      <Button variant="secondary" size="sm">
+                      <Button variant="secondary" size="sm" className="bg-blue text-white hover:bg-blue/90">
                         Ver Detalles
                         <ExternalLink className="w-4 h-4 ml-2" />
                       </Button>
@@ -174,19 +174,19 @@ export default function Component() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-primary text-primary-foreground">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-midnightblue text-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">
             ¿Listo para destacar con un CV o portafolio personalizado?
           </h2>
-          <p className="text-lg mb-8 text-primary-foreground/80" >
+          <p className="text-lg mb-8 text-white/80">
             Ponte en contacto con nosotros y haz realidad tu visión.
           </p>
-          <a href="/empezar">
-      <Button size="lg" variant="secondary"> 
-        Contáctanos Ahora
-      </Button>
-    </a>
+          <a href="/contacto">
+            <Button size="lg" variant="secondary" className="bg-white text-midnightblue hover:bg-white/90">
+              Contáctanos Ahora
+            </Button>
+          </a>
         </div>
       </section>
     </div>

@@ -511,7 +511,7 @@ export default function Component() {
   }
 
   return (
-    <div className="bg-babyblue min-h-screen py-20">
+    <div className="bg-gradient-to-b from-cornflowerblue/10 to-translucentwhite min-h-screen py-20">
       <div className="max-w-7xl mx-auto px-4">
         <div className="mb-8">
           <div className="flex justify-center items-center gap-4">

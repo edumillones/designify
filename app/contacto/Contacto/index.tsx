@@ -59,7 +59,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="bg-babyblue min-h-screen py-20 relative">
+    <div className="bg-gradient-to-b from-cornflowerblue/10 to-translucentwhite min-h-screen py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl sm:text-5xl font-black text-center mb-10">Contáctanos</h1>
         <div className="grid md:grid-cols-2 gap-12">

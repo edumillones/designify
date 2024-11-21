@@ -63,7 +63,7 @@ const Signin = () => {
                                                     Iniciar sesión
                                                 </h2>
                                             </div>
-                                            <form className="mt-8 space-y-6" action="#" method="POST">
+                                            <form className="mt-8 space-y-6" action="/contacto" method="POST">
                                                 <input type="hidden" name="remember" defaultValue="true" />
                                                 <div className="-space-y-px rounded-md shadow-sm">
                                                     <div>
@@ -110,7 +110,7 @@ const Signin = () => {
                                                     </div>
 
                                                     <div className="text-sm">
-                                                        <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                                        <a href="/contacto" className="font-medium text-indigo-600 hover:text-indigo-500">
                                                             ¿Olvidaste tu contraseña?
                                                         </a>
                                                     </div>

@@ -87,7 +87,7 @@ export default function Component() {
   }
 
   return (
-    <div className="min-h-screen bg-[#EBF5FF]">
+    <div className="min-h-screen bg-gradient-to-b from-cornflowerblue/10 to-translucentwhite">
       <div className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
         <div className="relative max-w-7xl mx-auto">
           <div className="text-center">

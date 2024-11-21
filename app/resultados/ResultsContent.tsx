@@ -11,7 +11,7 @@ interface DomainResult {
   error?: string
 }
 
-export default function ResultsPage() {
+export default function ResultsContent() {
   const searchParams = useSearchParams()
   const resultsParam = searchParams.get('results')
   const results: DomainResult[] = resultsParam ? JSON.parse(decodeURIComponent(resultsParam)) : []

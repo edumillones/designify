@@ -1,5 +1,5 @@
-import BlockPage from './resultados';  // Ajusta la ruta si es necesario
+import BlockPage from './Resultados';  // Ajusta la ruta si es necesario
 
-export default function DominioPage() {
+export default function Resultados() {
   return <BlockPage />;
 }

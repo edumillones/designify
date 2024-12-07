@@ -11,6 +11,7 @@ module.exports = {
   ],
   theme: {
   	colors: {
+		red: '#FF0000',
 		blue: '#0000FF',
 		cornflowerblue: '#6495ED',
 		dodgerblue: '#1E90FF',

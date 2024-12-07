@@ -15,6 +15,13 @@ interface ServiceOption {
   category: "web" | "portfolio" | "cv" | "app" | "custom"
 }
 
+const calculateDiscountedPrice = (price: number | string): number | string => {
+  if (typeof price === 'number') {
+    return Math.round(price * 0.8); // 20% discount
+  }
+  return price;
+}
+
 export default function Component() {
   const [step, setStep] = useState(1)
   const [selectedService, setSelectedService] = useState("")
@@ -247,14 +254,14 @@ export default function Component() {
 
   const serviceOptions = [
     { 
-      value: "cv", 
-      title: "CV",
-      description: "Crea un curriculum profesional que destaque"
-    },
-    { 
       value: "web", 
       title: "Página Web",
       description: "Establece tu presencia en línea"
+    },
+    { 
+      value: "cv", 
+      title: "CV",
+      description: "Crea un curriculum profesional que destaque"
     },
     { 
       value: "portfolio", 
@@ -283,6 +290,9 @@ export default function Component() {
     
     try {
       const selectedServiceObj = services.find(service => service.id === selectedPackage)
+      const discountedPrice = selectedServiceObj?.category === 'web' && typeof selectedServiceObj.price === 'number'
+        ? calculateDiscountedPrice(selectedServiceObj.price)
+        : selectedServiceObj?.price
       
       const response = await fetch('/api/submit-form', {
         method: 'POST',
@@ -292,7 +302,9 @@ export default function Component() {
         body: JSON.stringify({
           ...formData,
           selectedService: selectedServiceObj?.title,
-          servicePrice: selectedServiceObj?.price,
+          originalPrice: selectedServiceObj?.price,
+          discountedPrice: discountedPrice,
+          discount: selectedServiceObj?.category === 'web' ? '20%' : null,
         }),
       })
 
@@ -385,6 +397,29 @@ export default function Component() {
                     <h3 className="text-4xl font-semibold text-midnightblue group-hover:text-white mb-8">
                       {service.title}
                     </h3>
+                    <div className="mb-8">
+                      {typeof service.price === 'number' ? (
+                        <div className="flex flex-col items-start">
+                          <span className="text-2xl line-through text-black/40 group-hover:text-white/40">
+                            S/{service.price}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-4xl font-semibold text-midnightblue group-hover:text-white">
+                              S/{calculateDiscountedPrice(service.price)}
+                            </span>
+                            {typeof service.price === 'number' && (
+                              <span className="bg-red text-white px-2 py-1 rounded-full text-sm">
+                                20% OFF
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-4xl font-semibold text-midnightblue group-hover:text-white">
+                          {service.price}
+                        </span>
+                      )}
+                    </div>
                     <Button 
                       className="w-full py-4 px-8 text-xl font-medium text-white bg-blue rounded-full border-2 border-blue group-hover:bg-cornflowerblue group-hover:border-cornflowerblue mb-8 transition-colors"
                       onClick={() => {
@@ -394,11 +429,6 @@ export default function Component() {
                     >
                       Seleccionar
                     </Button>
-                    <div className="mb-8">
-                      <span className="text-4xl font-semibold text-midnightblue group-hover:text-white">
-                        {typeof service.price === 'number' ? `S/${service.price}` : service.price}
-                      </span>
-                    </div>
                     <div className="space-y-6">
                       {service.features.map((feature, index) => (
                         <div key={index} className="flex items-center gap-4">
@@ -530,3 +560,4 @@ export default function Component() {
     </div>
   )
 }
+

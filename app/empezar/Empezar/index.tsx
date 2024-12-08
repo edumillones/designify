@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ArrowLeft, Check, Loader2 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -33,6 +33,19 @@ export default function Component() {
     phone: "",
     additionalInfo: ""
   })
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const now = new Date();
+    const endDate = new Date(now.getFullYear(), 11, 24); // 24 de diciembre
+    const difference = endDate.getTime() - now.getTime();
+    return Math.max(Math.floor(difference / 1000), 0); // Convertir a segundos
+  });
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timerId = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timerId);
+    }
+  }, [timeLeft]);
 
   const services: ServiceOption[] = [
     {
@@ -457,6 +470,11 @@ export default function Component() {
               <ArrowLeft className="w-4 h-4" />
               Volver
             </Button>
+            <div className="text-center mb-6">
+              <p className="text-xl font-semibold text-red">
+                ¡Oferta Especial! Termina en: {Math.floor(timeLeft / 86400)} días, {Math.floor((timeLeft % 86400) / 3600)} horas, {Math.floor((timeLeft % 3600) / 60)} minutos
+              </p>
+            </div>
             <div className="bg-white rounded-3xl p-8">
               <h2 className="text-3xl font-semibold text-midnightblue mb-8 text-center">Información Personal</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -483,10 +501,11 @@ export default function Component() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-lg font-medium text-midnightblue mb-2">Teléfono (opcional)</label>
+                  <label htmlFor="phone" className="block text-lg font-medium text-midnightblue mb-2">Teléfono</label>
                   <input
                     id="phone"
                     type="tel"
+                    required
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue"
                     value={formData.phone}
                     onChange={(e) => setFormData({...formData, phone: e.target.value})}
@@ -503,7 +522,7 @@ export default function Component() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full py-4 px-8 text-xl font-medium text-white bg-blue rounded-full hover:bg-blue/90 transition-colors"
+                  className="w-full py-4 px-8 text-xl font-medium text-white bg-red rounded-full hover:bg-red-700 transition-colors transform hover:scale-105 shadow-lg"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -512,7 +531,7 @@ export default function Component() {
                       Enviando...
                     </>
                   ) : (
-                    'Enviar'
+                    '¡Reserva tu Servicio Ahora!'
                   )}
                 </Button>
               </form>

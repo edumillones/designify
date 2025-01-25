@@ -214,24 +214,208 @@ const projects = [
   },
 ]
 
+interface PortfolioSliderProps {
+  activeCategory: string
+  setActiveCategory: (category: string) => void
+}
+
+const PortfolioSlider: React.FC<PortfolioSliderProps> = ({ activeCategory, setActiveCategory }) => {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [isLeftButtonActive, setIsLeftButtonActive] = useState(false)
+  const [isRightButtonActive, setIsRightButtonActive] = useState(true)
+
+  useEffect(() => {
+    const handleWheel = (event: WheelEvent) => {
+      const element = scrollRef.current
+      if (element) {
+        const isScrollingHorizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+
+        if (isScrollingHorizontal) {
+          element.scrollLeft += event.deltaX
+          event.preventDefault()
+        }
+      }
+    }
+
+    const element = scrollRef.current
+    if (element) {
+      element.addEventListener("wheel", handleWheel, { passive: false })
+
+      return () => {
+        element.removeEventListener("wheel", handleWheel)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const element = scrollRef.current
+      if (element) {
+        const maxScrollLeft = element.scrollWidth - element.clientWidth
+        setIsLeftButtonActive(element.scrollLeft > 0)
+        setIsRightButtonActive(element.scrollLeft < maxScrollLeft)
+      }
+    }
+
+    const element = scrollRef.current
+    if (element) {
+      element.addEventListener("scroll", handleScroll)
+      handleScroll()
+      return () => {
+        element.removeEventListener("scroll", handleScroll)
+      }
+    }
+  }, [])
+
+  const scroll = (direction: "left" | "right") => {
+    const element = scrollRef.current
+    if (element) {
+      const scrollAmount = direction === "left" ? -331 : 331
+      element.scrollBy({ left: scrollAmount, behavior: "smooth" })
+    }
+  }
+
+  return (
+    <section id="projects" className="relative py-20 px-0 sm:px-6 lg:px-8 bg-blue/5">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-4 text-midnightblue">Nuestros Proyectos</h2>
+        <p className="text-lg text-black/60 text-center mb-12 max-w-3xl mx-auto">
+          Explora nuestra colección de proyectos en diferentes categorías, desde e-commerce hasta portafolios
+          profesionales.
+        </p>
+
+        <div className="flex justify-center gap-2 sm:gap-4 mb-8 px-4 sm:px-0">
+          {projects.map((category) => (
+            <Button
+              key={category.category}
+              onClick={() => setActiveCategory(category.category)}
+              variant={activeCategory === category.category ? "default" : "outline"}
+              className={`bg-blue text-white text-base sm:text-lg py-6 px-8 rounded-full transition-all transform ${
+                activeCategory === category.category
+                  ? "hover:bg-blue/90 shadow-lg scale-105"
+                  : "hover:bg-blue hover:text-white hover:scale-105"
+              }`}
+            >
+              {category.category}
+            </Button>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between mb-4 px-4 sm:px-0">
+          <p className="text-xl sm:text-[1.68rem] z-10 text-start text-midnightblue">{activeCategory}</p>
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center space-x-4 z-20">
+            <motion.button
+              onClick={() => scroll("left")}
+              className={`transition-all w-12 h-12 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm ${
+                isLeftButtonActive ? "text-midnightblue hover:bg-white hover:scale-110" : "opacity-30"
+              }`}
+              disabled={!isLeftButtonActive}
+              whileHover={isLeftButtonActive ? { scale: 1.1 } : {}}
+              whileTap={isLeftButtonActive ? { scale: 0.9 } : {}}
+            >
+              <IoIosArrowBack size={28} />
+            </motion.button>
+            <motion.button
+              onClick={() => scroll("right")}
+              className={`transition-all w-12 h-12 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm ${
+                isRightButtonActive ? "text-midnightblue hover:bg-white hover:scale-110" : "opacity-30"
+              }`}
+              disabled={!isRightButtonActive}
+              whileHover={isRightButtonActive ? { scale: 1.1 } : {}}
+              whileTap={isRightButtonActive ? { scale: 0.9 } : {}}
+            >
+              <IoIosArrowForward size={28} />
+            </motion.button>
+          </div>
+        </div>
+
+        <div
+          ref={scrollRef}
+          className="flex h-full overflow-x-auto overflow-y-hidden no-scrollbar px-4 sm:px-0"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {projects
+            .find((category) => category.category === activeCategory)
+            ?.items.map((project, index) => (
+              <a href={project.link} key={project.id} target="_blank" rel="noopener noreferrer">
+                <motion.div
+                  className={`group relative flex-shrink-0 w-[280px] sm:w-[331px] h-[240px] sm:h-[277px] rounded-md ${
+                    index !== 0 ? "ml-[0.9rem]" : ""
+                  }`}
+                  style={{
+                    backgroundImage: `url(${project.url})`,
+                    backgroundSize: "100% auto",
+                    backgroundPosition: "center",
+                  }}
+                  whileHover={{ backgroundSize: "103% auto" }}
+                >
+                  <div className="absolute inset-0 z-10 flex flex-col justify-between p-5">
+                    <div>
+                      <p className={`text-sm ${project.color}`}>{project.title}</p>
+                    </div>
+                    <div className="absolute bottom-5 left-5 text-left">
+                      <p
+                        className={`text-[.75rem] sm:text-[.8rem] md:text-[.99rem] ${project.color} ${
+                          project.shadow === "yes" ? "[text-shadow:_0_0_23px_rgb(0_0_0_/_100%)]" : ""
+                        } mr-2`}
+                      >
+                        {project.description}
+                      </p>
+                      <p
+                        className={`text-[.6rem] sm:text-[.65rem] md:text-[.85rem] opacity-75 ${project.color} ${
+                          project.shadow === "yes" ? "[text-shadow:_0_0_16px_rgb(0_0_0_/_100%)]" : ""
+                        } mt-2`}
+                        dangerouslySetInnerHTML={{ __html: project.tools.replace(/\s/g, "&nbsp;") }}
+                      ></p>
+                    </div>
+                  </div>
+                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ExternalLink className="w-5 h-5 text-white" />
+                  </div>
+                </motion.div>
+              </a>
+            ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function Component() {
+  const [activeCategory, setActiveCategory] = useState("E-Commerce")
+
   return (
     <div
       className="min-h-screen bg-babyblue w-screen overflow-x-hidden fixed-screen"
       style={{ minHeight: "100dvh", margin: 0, padding: 0 }}
     >
       {/* Hero Section */}
-      <section className="relative py-20 px-0 sm:px-6 lg:px-8 bg-gradient-to-b from-cornflowerblue/10 to-translucentwhite">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-black mb-6 text-midnightblue">Haz realidad tu visión</h1>
-          <p className="text-xl text-black/60 max-w-3xl mx-auto">
+      <section className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-cornflowerblue/10 via-babyblue/50 to-blue/5">
+        <div className="absolute inset-0 bg-[url('/assets/grid.svg')] opacity-[0.04]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-blue/5" />
+        <div className="relative max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8 py-20">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-black mb-6 text-midnightblue leading-tight"
+          >
+            Haz realidad tu <span className="text-blue">visión</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-xl sm:text-2xl text-black/60 max-w-3xl mx-auto leading-relaxed"
+          >
             Explora y visita nuestras páginas que han ayudado a profesionales a destacar.
-          </p>
+          </motion.p>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-blue/5" />
       </section>
 
       {/* Portfolio Slider Section */}
-      <PortfolioSlider />
+      <PortfolioSlider activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
 
       {/* Testimonials Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-babyblue">
@@ -332,167 +516,6 @@ export default function Component() {
         </div>
       </section>
     </div>
-  )
-}
-
-const PortfolioSlider = () => {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [isLeftButtonActive, setIsLeftButtonActive] = useState(false)
-  const [isRightButtonActive, setIsRightButtonActive] = useState(true)
-  const [activeCategory, setActiveCategory] = useState("E-Commerce")
-
-  useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
-      const element = scrollRef.current
-      if (element) {
-        const isScrollingHorizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY)
-
-        if (isScrollingHorizontal) {
-          element.scrollLeft += event.deltaX
-          event.preventDefault()
-        }
-      }
-    }
-
-    const element = scrollRef.current
-    if (element) {
-      element.addEventListener("wheel", handleWheel, { passive: false })
-
-      return () => {
-        element.removeEventListener("wheel", handleWheel)
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const element = scrollRef.current
-      if (element) {
-        const maxScrollLeft = element.scrollWidth - element.clientWidth
-        setIsLeftButtonActive(element.scrollLeft > 0)
-        setIsRightButtonActive(element.scrollLeft < maxScrollLeft)
-      }
-    }
-
-    const element = scrollRef.current
-    if (element) {
-      element.addEventListener("scroll", handleScroll)
-
-      handleScroll()
-
-      return () => {
-        element.removeEventListener("scroll", handleScroll)
-      }
-    }
-  }, [])
-
-  const scroll = (direction: "left" | "right") => {
-    const element = scrollRef.current
-    if (element) {
-      const scrollAmount = direction === "left" ? -331 : 331
-      element.scrollBy({ left: scrollAmount, behavior: "smooth" })
-    }
-  }
-
-  return (
-    <section id="projects" className="relative py-20 px-0 sm:px-6 lg:px-8 bg-blue/5">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-4 text-midnightblue">Nuestros Proyectos</h2>
-        <p className="text-lg text-black/60 text-center mb-12 max-w-3xl mx-auto">
-          Explora nuestra colección de proyectos en diferentes categorías, desde e-commerce hasta portafolios
-          profesionales.
-        </p>
-
-        <div className="flex justify-end gap-2 sm:gap-4 mb-8 px-4 sm:px-0">
-          {projects.map((category) => (
-            <Button
-              key={category.category}
-              onClick={() => setActiveCategory(category.category)}
-              variant={activeCategory === category.category ? "default" : "outline"}
-              className={`bg-blue text-white text-base sm:text-lg py-6 px-8 rounded-full transition-all ${
-                activeCategory === category.category ? "hover:bg-blue/90 shadow-lg" : "hover:bg-blue hover:text-white"
-              }`}
-            >
-              {category.category}
-            </Button>
-          ))}
-        </div>
-
-        <div className="flex items-center justify-between mb-4 px-4 sm:px-0">
-          <p className="text-xl sm:text-[1.68rem] z-10 text-start text-midnightblue">{activeCategory}</p>
-          <div className="flex items-center space-x-2">
-            <motion.button
-              onClick={() => scroll("left")}
-              className={`transition-all w-10 h-10 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm ${
-                isLeftButtonActive ? "text-midnightblue hover:bg-white" : "opacity-30"
-              }`}
-              disabled={!isLeftButtonActive}
-              whileTap={isLeftButtonActive ? { scale: 0.9 } : {}}
-            >
-              <IoIosArrowBack size={24} />
-            </motion.button>
-            <motion.button
-              onClick={() => scroll("right")}
-              className={`transition-all w-10 h-10 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm ${
-                isRightButtonActive ? "text-midnightblue hover:bg-white" : "opacity-30"
-              }`}
-              disabled={!isRightButtonActive}
-              whileTap={isRightButtonActive ? { scale: 0.9 } : {}}
-            >
-              <IoIosArrowForward size={24} />
-            </motion.button>
-          </div>
-        </div>
-
-        <div
-          ref={scrollRef}
-          className="flex h-full overflow-x-auto overflow-y-hidden no-scrollbar px-4 sm:px-0"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {projects
-            .find((category) => category.category === activeCategory)
-            ?.items.map((project, index) => (
-              <a href={project.link} key={project.id} target="_blank" rel="noopener noreferrer">
-                <motion.div
-                  className={`group relative flex-shrink-0 w-[280px] sm:w-[331px] h-[240px] sm:h-[277px] rounded-md ${
-                    index !== 0 ? "ml-[0.9rem]" : ""
-                  }`}
-                  style={{
-                    backgroundImage: `url(${project.url})`,
-                    backgroundSize: "100% auto",
-                    backgroundPosition: "center",
-                  }}
-                  whileHover={{ backgroundSize: "103% auto" }}
-                >
-                  <div className="absolute inset-0 z-10 flex flex-col justify-between p-5">
-                    <div>
-                      <p className={`text-sm ${project.color}`}>{project.title}</p>
-                    </div>
-                    <div className="absolute bottom-5 left-5 text-left">
-                      <p
-                        className={`text-[.75rem] sm:text-[.8rem] md:text-[.99rem] ${project.color} ${
-                          project.shadow === "yes" ? "[text-shadow:_0_0_23px_rgb(0_0_0_/_100%)]" : ""
-                        } mr-2`}
-                      >
-                        {project.description}
-                      </p>
-                      <p
-                        className={`text-[.6rem] sm:text-[.65rem] md:text-[.85rem] opacity-75 ${project.color} ${
-                          project.shadow === "yes" ? "[text-shadow:_0_0_16px_rgb(0_0_0_/_100%)]" : ""
-                        } mt-2`}
-                        dangerouslySetInnerHTML={{ __html: project.tools.replace(/\s/g, "&nbsp;") }}
-                      ></p>
-                    </div>
-                  </div>
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ExternalLink className="w-5 h-5 text-white" />
-                  </div>
-                </motion.div>
-              </a>
-            ))}
-        </div>
-      </div>
-    </section>
   )
 }
 

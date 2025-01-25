@@ -1,4 +1,4 @@
-import { AnimatedHeader } from "./components/animated-header"
+// import { AnimatedHeader } from "./components/animated-header"
 // import { PromoPopup } from "./components/promo-popup"
 import Banner from './components/Banner/index';
 import People from './components/People/index';
@@ -11,7 +11,6 @@ import Pricing from './components/Pricing/index';
 export default function Home() {
   return (
     <main>
-      <AnimatedHeader/>
       <Banner />
       <People />
       <Features />

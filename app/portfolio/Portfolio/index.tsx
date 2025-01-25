@@ -290,7 +290,7 @@ const PortfolioSlider: React.FC<PortfolioSliderProps> = ({ activeCategory, setAc
               key={category.category}
               onClick={() => setActiveCategory(category.category)}
               variant={activeCategory === category.category ? "default" : "outline"}
-              className={`bg-blue text-white text-sm sm:text-base py-4 sm:py-6 px-4 sm:px-8 rounded-full transition-all transform ${
+              className={`bg-blue text-white text-base sm:text-lg py-6 px-8 rounded-full transition-all transform ${
                 activeCategory === category.category
                   ? "hover:bg-blue/90 shadow-lg scale-105"
                   : "hover:bg-blue hover:text-white hover:scale-105"

@@ -290,7 +290,7 @@ const PortfolioSlider: React.FC<PortfolioSliderProps> = ({ activeCategory, setAc
               key={category.category}
               onClick={() => setActiveCategory(category.category)}
               variant={activeCategory === category.category ? "default" : "outline"}
-              className={`bg-blue text-white text-base sm:text-lg py-6 px-8 rounded-full transition-all transform ${
+              className={`bg-blue text-white text-sm sm:text-base py-3 sm:py-6 px-4 sm:px-8 rounded-full transition-all transform ${
                 activeCategory === category.category
                   ? "hover:bg-blue/90 shadow-lg scale-105"
                   : "hover:bg-blue hover:text-white hover:scale-105"
@@ -301,37 +301,34 @@ const PortfolioSlider: React.FC<PortfolioSliderProps> = ({ activeCategory, setAc
           ))}
         </div>
 
-        <div className="flex items-center justify-between mb-4 px-4 sm:px-0">
-          <p className="text-xl sm:text-[1.68rem] z-10 text-start text-midnightblue">{activeCategory}</p>
-          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center space-x-4 z-20">
-            <motion.button
-              onClick={() => scroll("left")}
-              className={`transition-all w-12 h-12 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm ${
-                isLeftButtonActive ? "text-midnightblue hover:bg-white hover:scale-110" : "opacity-30"
-              }`}
-              disabled={!isLeftButtonActive}
-              whileHover={isLeftButtonActive ? { scale: 1.1 } : {}}
-              whileTap={isLeftButtonActive ? { scale: 0.9 } : {}}
-            >
-              <IoIosArrowBack size={28} />
-            </motion.button>
-            <motion.button
-              onClick={() => scroll("right")}
-              className={`transition-all w-12 h-12 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm ${
-                isRightButtonActive ? "text-midnightblue hover:bg-white hover:scale-110" : "opacity-30"
-              }`}
-              disabled={!isRightButtonActive}
-              whileHover={isRightButtonActive ? { scale: 1.1 } : {}}
-              whileTap={isRightButtonActive ? { scale: 0.9 } : {}}
-            >
-              <IoIosArrowForward size={28} />
-            </motion.button>
-          </div>
+        <div className="hidden sm:flex sm:absolute sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 items-center justify-center space-x-4 z-20">
+          <motion.button
+            onClick={() => scroll("left")}
+            className={`transition-all w-12 h-12 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm ${
+              isLeftButtonActive ? "text-midnightblue hover:bg-white hover:scale-110" : "opacity-30"
+            }`}
+            disabled={!isLeftButtonActive}
+            whileHover={isLeftButtonActive ? { scale: 1.1 } : {}}
+            whileTap={isLeftButtonActive ? { scale: 0.9 } : {}}
+          >
+            <IoIosArrowBack size={28} />
+          </motion.button>
+          <motion.button
+            onClick={() => scroll("right")}
+            className={`transition-all w-12 h-12 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm ${
+              isRightButtonActive ? "text-midnightblue hover:bg-white hover:scale-110" : "opacity-30"
+            }`}
+            disabled={!isRightButtonActive}
+            whileHover={isRightButtonActive ? { scale: 1.1 } : {}}
+            whileTap={isRightButtonActive ? { scale: 0.9 } : {}}
+          >
+            <IoIosArrowForward size={28} />
+          </motion.button>
         </div>
 
         <div
           ref={scrollRef}
-          className="flex h-full overflow-x-auto overflow-y-hidden no-scrollbar px-4 sm:px-0"
+          className="flex h-full overflow-x-auto overflow-y-hidden no-scrollbar px-2 sm:px-0 -mx-2 sm:mx-0"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {projects
@@ -339,8 +336,8 @@ const PortfolioSlider: React.FC<PortfolioSliderProps> = ({ activeCategory, setAc
             ?.items.map((project, index) => (
               <a href={project.link} key={project.id} target="_blank" rel="noopener noreferrer">
                 <motion.div
-                  className={`group relative flex-shrink-0 w-[280px] sm:w-[331px] h-[240px] sm:h-[277px] rounded-md ${
-                    index !== 0 ? "ml-[0.9rem]" : ""
+                  className={`group relative flex-shrink-0 w-[260px] sm:w-[331px] h-[220px] sm:h-[277px] rounded-md ${
+                    index !== 0 ? "ml-[0.8rem] sm:ml-[0.9rem]" : ""
                   }`}
                   style={{
                     backgroundImage: `url(${project.url})`,
